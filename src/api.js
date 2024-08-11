@@ -1,16 +1,17 @@
 export const getBannerData = async () => {
-    const response = await fetch('https://assignment-backend-vzjs.onrender.com/api/banner');
-    const data = await response.json();
-    return data;
-  };
+    try {
+      const response = await fetch('https://assignment-backend-vzjs.onrender.com/api/banner');
+      
+      // Check if the response is not empty
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
   
-  export const updateBannerData = async (data) => {
-    await fetch('https://assignment-backend-vzjs.onrender.com/api/banner', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    });
+      // Attempt to parse the response as JSON
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Error fetching banner data:', error);
+      return null;
+    }
   };
-  
